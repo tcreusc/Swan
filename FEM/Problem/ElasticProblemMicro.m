@@ -49,19 +49,6 @@ classdef ElasticProblemMicro < ElasticProblem
             obj.variables.tdisp   = tDisp;
         end
 
-%         function print(obj,filename)
-%             s.quad = obj.quadrature;
-%             s.mesh = obj.mesh;
-%             s.iter = 0;
-%             s.variables = obj.variables2print;
-%             s.ptype     = obj.problemData.ptype;
-%             s.ndim      = obj.dim.ndim;
-%             s.pdim      = obj.problemData.pdim;
-%             s.type      = 'HomogenizedTensor';
-%             fPrinter = FemPrinter(s);
-%             fPrinter.print(filename);
-%          end        
-
     end
 
     methods (Access = private)
@@ -117,17 +104,5 @@ classdef ElasticProblemMicro < ElasticProblem
         end
         
     end
-
-    methods (Access = protected)
-
-        function f = createVariablesToPrint(obj)
-            f = obj.variables2print;
-        end
-
-        function t = createPrintType(obj)
-           t = 'HomogenizedTensor';
-        end
-
-    end    
 
 end

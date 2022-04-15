@@ -15,8 +15,6 @@ classdef MaterialInterpolationFactory < handle
                     switch cParams.interpolation
                         case 'SIMPALL'
                             if ~isfield(cParams,'simpAllType')
-                                cParams.simpAllType = 'EXPLICIT';
-                            else
                                 if isempty(cParams.simpAllType)
                                     cParams.simpAllType = 'EXPLICIT';
                                 end

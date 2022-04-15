@@ -4,11 +4,10 @@ classdef FemPrinter < handle
         mesh
         quad
         iter
-        fields
+        variables
         ndim
         pdim
         ptype
-        type
     end
     
     properties (Access = private)
@@ -18,25 +17,23 @@ classdef FemPrinter < handle
     methods (Access = public)
         
         function obj = FemPrinter(cParams)
-            obj.mesh   = cParams.mesh;
-            obj.quad   = cParams.quad;
-            obj.iter   = cParams.iter;
-            obj.fields = cParams.fields;
-            obj.ndim   = cParams.ndim;
-            obj.ptype  = cParams.ptype;
-            obj.pdim   = cParams.pdim;
-            obj.type   = cParams.type;
+            obj.mesh = cParams.mesh;
+            obj.quad = cParams.quad;
+            obj.iter = cParams.iter;
+            obj.variables = cParams.variables;
+            obj.ndim  = cParams.ndim;
+            obj.ptype = cParams.ptype;
+            obj.pdim  = cParams.pdim;
         end
         
         function print(obj,fileName)
             dI = obj.createPostProcessDataBase(fileName);
             dI.ndim   = obj.ndim;
             dI.pdim   = obj.pdim;
-            dI.ptype  = obj.ptype;      
-            dI.name = '';
-            p = Postprocess(obj.type,dI);
+            dI.ptype  = obj.ptype;            
+            p = Postprocess('HomogenizedTensor',dI);
             q        = obj.quad;
-            d.fields = obj.fields;
+            d.fields = obj.variables;
             d.quad   = q;
             p.print(obj.iter,d);
         end

@@ -69,19 +69,31 @@ classdef ElasticProblem < handle
         function quad = getQuadrature(obj)
             quad  = obj.quadrature;
         end
-       
+%         
+%         function print(obj,fileName)
+%             dI = obj.createPostProcessDataBase(fileName);
+%             dI.pdim = '2D';
+%             dI.ptype = 'ELASTICTY';
+%             dI.name = '';
+%             postprocess = Postprocess('Elasticity',dI); % not a scalar
+%             q = obj.getQuadrature();
+%             d.fields = obj.variables;
+%             d.fields.u = obj.splitDisplacement();
+%             d.quad = q;
+%             postprocess.print(1,d);
+%         end
+
         function print(obj,filename)
             s.quad = obj.quadrature;
             s.mesh = obj.mesh;
             s.iter = 0;
-            s.fields    = obj.createVariablesToPrint();
+            s.variables = obj.variables2print;
             s.ptype     = obj.problemData.ptype;
             s.ndim      = obj.dim.ndim;
             s.pdim      = obj.problemData.pdim;
-            s.type      = obj.createPrintType();
             fPrinter = FemPrinter(s);
-            fPrinter.print(filename);            
-        end
+            fPrinter.print(filename);
+         end
 
     end
 
@@ -264,7 +276,6 @@ classdef ElasticProblem < handle
             ps = PostProcessDataBaseCreator(dI);
             d = ps.getValue();
         end
-
         
         function uM = splitDisplacement(obj)
             u = obj.variables.d_u;
@@ -277,21 +288,6 @@ classdef ElasticProblem < handle
                 uM(:,idim) = u(dofs);
             end
         end
-
-
-    end
-
-    methods (Access = protected)
-
-        function f = createVariablesToPrint(obj)
-            f = obj.variables;
-            f.u = obj.splitDisplacement();
-        end
-
-        function t = createPrintType(obj)
-           t = 'Elasticity';
-        end
-
 
     end
 
